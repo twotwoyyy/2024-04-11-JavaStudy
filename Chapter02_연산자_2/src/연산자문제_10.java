@@ -12,7 +12,7 @@ public class 연산자문제_10 {
 		System.out.println("re:"+re+",i:"+i);
 		
 		//이거 다시 이해하기  
-		
+		 
 	}
 
 }
