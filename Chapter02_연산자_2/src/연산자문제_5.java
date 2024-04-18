@@ -15,7 +15,7 @@ public class 연산자문제_5 {
 	      System.out.printf("%d \n", num1); //10
 	      // (단독 출력)다른 연산자가 없으면 무조건 증가, 감소  
 	      char c='A';
-	      System.out.println(c++); // 출력하고 나중에 증가  
+	      System.out.println(c++); // 출력하고 나중에 증가   
 	      
 	      
 
