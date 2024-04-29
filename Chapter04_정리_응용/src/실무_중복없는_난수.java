@@ -23,6 +23,6 @@ public class 실무_중복없는_난수 {
 			lotto[i]=su;
 		}
 		System.out.println(Arrays.toString(lotto));
-	}
+	} 
 
 }
