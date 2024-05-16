@@ -129,7 +129,7 @@ class 사각형 extends 도형{
 
 	@Override
 	public void draw() {
-		System.out.println("사각형을 그린다...");
+		System.out.println("사각형을 그린다....");
 	}
 }
 public class 추상클래스_01 {
