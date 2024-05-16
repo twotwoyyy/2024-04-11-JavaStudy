@@ -4,7 +4,7 @@ package com.sist.main2;
 public class Music {
 //  다른 클래스에서 사용 한다 
 	private String mno;
-	private String mtitle;
+	private String title;
 	private String singer;
 	private String album;
 	private String poster;
@@ -20,14 +20,14 @@ public class Music {
 		// this가 많이 사용되는 곳 => 멤버변수/지역변수의 이름이 같은 경우에 구분 
 		// this.mno => Music이 가지고 있는 변수 
 	}
-	public String getMtitle() {
-		return mtitle;
+	public String getTitle() {
+		return title;
 		// 1. 지역변수, 매개변수 찾고 없는 경우 => 2. 멤버변수 찾기 
 		// 지역변수 우선순위!! 
 		// 없는 경우에는 this. 를 생략 가능 // 충돌이 안되면 this. 생략 가능 
 	}
-	public void setMtitle(String mtitle) {
-		this.mtitle = mtitle;
+	public void setTitle(String title) {
+		this.title = title;
 	}
 	public String getSinger() {
 		return singer;
