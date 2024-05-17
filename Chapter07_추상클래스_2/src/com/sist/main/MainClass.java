@@ -9,13 +9,13 @@ package com.sist.main;
                     B b=(B)a;
   }
  */
-class A{
+class AA{
 	void aaa() {}
 	private void bbb() {} //private는 오버라이딩이 안 된다 
 	protected void ccc() {}
 	public void ddd() {}
 }
-class B extends A{
+class BB extends AA{
 	
 	private void bbb() {
 		// 오버라이딩이 안된다!! 
@@ -45,7 +45,9 @@ public class MainClass {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-
+		AA a=new BB();
+		BB b=(BB)a;
 	}
 
 }
+
