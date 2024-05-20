@@ -22,7 +22,7 @@ public class 예외처리_응용 extends JFrame implements ActionListener{
 		b2=new JButton("종료");
 		
 		// 배치
-	setLayout(null); // 사용자 정의 
+	setLayout(null); // 사용자 정의  
 	tf.setBounds(10, 15, 150, 30);
 	tf.setEnabled(false); // 비활성화 시키기 
 	// 윈도우에 추가
