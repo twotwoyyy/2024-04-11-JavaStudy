@@ -17,7 +17,7 @@ public class 예외처리_응용2 extends JFrame implements ActionListener{
     // 메소드 한개에서만 사용 => 지역변수 
     // 처리는 입력 => 엔터시 => 입력값을 받는다 , 비교 => 결과값 출력 
     int s,b;
-    public 예외처리_응용2()
+    public 예외처리_응용2() 
     {
     	tf=new JTextField();
     	b1=new JButton("시작");
