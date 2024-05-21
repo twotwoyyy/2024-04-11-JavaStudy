@@ -42,7 +42,7 @@ public class 라이브러리_Object_2 {
 		ArrayList <Sawon> list=new ArrayList<Sawon>(); // <Sawon> 데이터형 통일 : 제네릭스 
 		list.add(new Sawon());
 		list.add(new Sawon());
-		list.add(new Sawon()); // add가 Object
+		list.add(new Sawon()); // add가 Object 
 		
 		
 	}
