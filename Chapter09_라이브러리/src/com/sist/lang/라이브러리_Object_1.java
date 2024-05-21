@@ -46,7 +46,7 @@ public class 라이브러리_Object_1 extends JFrame implements ItemListener{
 		//배치
 		setLayout(null);
 		box.setBounds(10,15,300,30);
-		la.setBounds(10,50,300,40);
+		la.setBounds(10,50,300,40); 
 		
 		add(box);
 		add(la);
