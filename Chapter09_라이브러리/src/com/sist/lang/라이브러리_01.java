@@ -93,7 +93,7 @@ public class 라이브러리_01 {
 		System.out.println(temp1);
 		System.out.println("======temp 변경======");
 		temp1[0]=100;
-		temp1[1]=200;
+		temp1[1]=200; 
 		temp1[2]=300;
 		System.out.println("======temp======");
 		System.out.println(Arrays.toString(temp1));
