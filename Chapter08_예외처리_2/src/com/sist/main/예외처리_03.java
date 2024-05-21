@@ -5,7 +5,7 @@ import java.util.*;
 class MinusException extends Exception{ // Exception 상속을 받으면 예외처리 전체 처리  
 	public MinusException(String msg) {
 		super(msg);
-	}
+	} 
 }
 public class 예외처리_03 {
 
