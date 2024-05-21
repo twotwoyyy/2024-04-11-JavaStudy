@@ -1,9 +1,9 @@
 package com.sist.main;
 import java.io.*;
 /*
- *	trows : 임의로 에러 발생
+ *	trow : 임의로 에러 발생
  *  형식)
- *     thorws new 예외클래스() => catch로 이동
+ *     thorw new 예외클래스() => catch로 이동
  *     => 코딩이 불가능
  *     catch는 예외처리 크기에 따라 순서가 존재 => 상속도
  *     throw문장은 예외처리 순서가 없다 
