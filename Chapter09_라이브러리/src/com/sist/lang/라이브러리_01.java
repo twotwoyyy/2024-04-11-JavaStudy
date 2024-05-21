@@ -75,7 +75,7 @@ package com.sist.lang;
  *        = finalize() : 소멸자 => 메모리에서 해제 => 자동으로 호출
  *        = 객체 비교 : equals()
  *        = -------  hashCode() ** 
- *                  
+ *                   
  *     
  */
 import java.util.*;
