@@ -32,7 +32,7 @@ public class ChatPanel extends JPanel{
 		chatWrite.setBounds(20, 470, 450, 30);
 		add(chatWrite);
 		
-		chatSubmit.setBounds(470, 470, 50, 30);
+		chatSubmit.setBounds(480, 470, 50, 30);
 		add(chatSubmit);
 		
 		//table
