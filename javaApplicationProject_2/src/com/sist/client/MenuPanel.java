@@ -12,6 +12,8 @@ public class MenuPanel extends JPanel{
 		chatBtn=new JButton("채팅");
 		newsBtn=new JButton("뉴스 검색");
 		exitBtn=new JButton("나가기");
+
+
 		
 		// add는 추가되는 순서대로 버튼이 나타난다
 		add(homeBtn);
