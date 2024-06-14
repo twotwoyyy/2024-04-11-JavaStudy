@@ -36,8 +36,9 @@ public class MemberDAO {
    // 4. 싱글턴 => 한사람당 한개의 DAO만 사용할수 있게 만든다 => 메모리 누수현상을 제거 
    public static MemberDAO newInstance()
    {
-	   if(dao==null)
+	   if(dao==null) {
 		   dao=new MemberDAO();
+		   }
 	   return dao;// null이 아니면 기존에 저장된 dao를 전송 
    }
    ////////////////////////////// 모든 DAO에 공통 사항 
@@ -81,62 +82,153 @@ public class MemberDAO {
 			   ps=conn.prepareStatement(sql);
 			   ps.setString(1, id);
 			   // 결과값 받기 
-			   rs=ps.executeQuery();
-			   rs.next();
-			   String db_pwd=rs.getString(1);
-			   rs.close();
-			   
-			   if(db_pwd.equals(pwd))// 로그인 
-			   {
-				   result="OK";
-			   }
-			   else // 이름이 없는 상태 
-			   {
-				   result="NOPWD";
-			   }
-		   }
-	   }catch(Exception ex)
-	   {
-		   ex.printStackTrace();// 오류 확인 => null , SQL문장 
-	   }
-	   finally
-	   {
-		   // 오라클 해제 
-		   disConnection();
-	   }
-	   return result;
-   }
-   // 2. 회원가입 => 아이디 중복 체크 / 우편번호 검색 
-   // 3. 회원수정
-   // 4. 회원탈퇴 
-   // => SQL문장 제작 => 웹도 가능 => DAO변경이 없다 
-   // 5. 우편번호 검색 
-   public ArrayList<ZipcodeVO> postFindData(String dong){
-	   ArrayList<ZipcodeVO> list=new ArrayList<ZipcodeVO>();
-	   try {
-		   getConnection();
-		   String sql="SELECT zipcode,sido,gugun,dong,NVL(bunji,' ') "
-				   + "FROM zipcode "
-				   + "WHERE dong LIKE '%'||?||'%'";
+				rs=ps.executeQuery();
+				rs.next();
+				String db_pwd=rs.getString(1);
+				rs.close();
+				
+				if(db_pwd.equals(pwd)) { //로그인
+					result="OK";
+				}else { //이름 불일치
+					result="NOPWD";
+				}
+			}
+		}catch(Exception ex) {
+			ex.printStackTrace(); //오류확인 => null / sql문장
+		}finally {
+			//오라클 해제
+			disConnection();
+		}
+		return result;
+	}
+   // 1-1 회원 정보 읽기 
+   public MemberVO memberInfo(String id) { // 아이디가 갖고 있는 모든 정보 읽기
+	   MemberVO vo=new MemberVO();
+	   try
+	      {
+	         getConnection();
+	         String sql="SELECT id,name,sex,admin "
+	                 +"FROM member "
+	                 +"WHERE id=?";
 		   ps=conn.prepareStatement(sql);
-		   ps.setString(1, dong);
+		   ps.setString(1, id);
 		   ResultSet rs=ps.executeQuery();
-		   while(rs.next()) {
-			   ZipcodeVO vo=new ZipcodeVO();
-			   vo.setZipcode(rs.getString(1));
-			   vo.setSido(rs.getString(2));
-			   vo.setGugun(rs.getString(3));
-			   vo.setDong(rs.getString(4));
-			   vo.setBunji(rs.getString(5));
-			   list.add(vo);
-		   }
+		   
+		   rs.next();
+		   vo.setId(rs.getString(1));
+		   vo.setName(rs.getString(2));
+		   vo.setSex(rs.getString(3));
+		   vo.setAdmin(rs.getString(4));
 		   rs.close();
 	   }catch(Exception ex) {
-		   
+		   ex.printStackTrace();
 	   }finally {
 		   disConnection();
 	   }
-	   return list;
+	   return vo;
+	   
    }
-   
+	//2.회원가입 - 아이디중복체크, 우편번호검색
+	/*
+	  ID               NOT NULL VARCHAR2(20)
+     PWD              NOT NULL VARCHAR2(10)
+     NAME             NOT NULL VARCHAR2(51)
+     SEX                       CHAR(6)
+     BIRTHDAY                  VARCHAR2(10)
+     POST             NOT NULL VARCHAR2(7)
+     ADDR1            NOT NULL VARCHAR2(150)
+     ADDR2                     VARCHAR2(150)
+     PHONE                     VARCHAR2(13)
+     EMAIL                     VARCHAR2(100)
+     CONTENT                   CLOB
+     REGDATE                   DATE
+     ADMIN                     CHAR(1) 
+	 */
+	public String memberInsert(MemberVO vo) {
+		/*
+		   Statement 한번에 값 채우기
+		   String sql="INSERT INTO member VALUES('"+vo.getID()+"','"+vo.getPwd+"','"......
+		 */
+		String result="";
+		try {
+			getConnection();
+			String sql="INSERT INTO member VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, SYSDATE, 'n')";
+			ps=conn.prepareStatement(sql);
+
+			ps.setString(1, vo.getId());
+			ps.setString(2, vo.getPwd());
+			ps.setString(3, vo.getName());
+			ps.setString(4, vo.getSex());
+			ps.setString(5, vo.getBirthday());
+			ps.setString(6, vo.getPost());
+			ps.setString(7, vo.getAddr1());
+			ps.setString(8, vo.getAddr2());
+			ps.setString(9, vo.getPhone());
+			ps.setString(10, vo.getEmail());
+			ps.setString(11, vo.getContent());
+			
+			//추가요청
+			ps.executeUpdate(); //INSERT / UPDATE / DELETE에 사용
+			//executeQuery() 데이터를 가지고 온다 SELECT 사용
+			//COMMIT 포함 => 바로저장
+			//executeUpdate()에 conn.commit()포함
+			result="yes";
+		}catch(Exception ex) {
+			result=ex.getMessage();
+			ex.printStackTrace();
+		}finally {
+			disConnection();
+		}
+		return result;
+	}
+	// 2-1. 아이디중복체크
+	public int memberIdCheck(String id) {
+		int count=0;
+		try {
+			getConnection();
+			String sql="SELECT COUNT(*) FROM member "
+					+"WHERE id=?";
+			ps=conn.prepareStatement(sql);
+			
+			//물음표에 값 채우기
+			ps.setString(1, id);
+			ResultSet rs=ps.executeQuery();
+			rs.next();
+			count=rs.getInt(1); //0 or 1
+			rs.close();
+		}catch(Exception ex) {
+			ex.printStackTrace();
+		}finally {
+			disConnection();
+		}
+		return count;
+	}
+	//2-2.우편번호 검색
+	public ArrayList<ZipcodeVO> postFindData(String dong){
+		ArrayList<ZipcodeVO> list=new ArrayList<ZipcodeVO>();
+		try {
+			getConnection();
+			String sql="SELECT zipcode, sido, gugun, dong, NVL(bunji,' ') "
+					+ "FROM zipcode "
+					+ "WHERE dong LIKE '%'||?||'%'";
+			ps=conn.prepareStatement(sql);
+			ps.setString(1, dong); //자동으로 '서교', setString은 자동으로 작은따옴표 붙여줌
+			ResultSet rs=ps.executeQuery();
+			while(rs.next()) {
+				ZipcodeVO vo=new ZipcodeVO();
+				vo.setZipcode(rs.getString(1));
+				vo.setSido(rs.getString(2));
+				vo.setGugun(rs.getString(3));
+				vo.setDong(rs.getString(4));
+				vo.setBunji(rs.getString(5));
+				list.add(vo);
+			}
+			rs.close();
+		}catch(Exception ex) {
+			ex.printStackTrace();
+		}finally {
+			disConnection();
+		}
+		return list;
+	}
 }

@@ -3,9 +3,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-public class JoinPanel extends JPanel implements ActionListener{
+
+
+public class JoinPanel extends JPanel{
 	JLabel title, id, pw, pw2, name, gender, birth, post, addr1, addr2, phone, phoneD1, phoneD2, email, emailAt, content;
-	JTextField idF, pwF, pw2F, nameF, birthF, postF, addr1F, addr2F, phoneF1, phoneF2, phoneF3, emailF;
+	JTextField idF, nameF, birthF, postF, addr1F, addr2F, phoneF1, phoneF2, phoneF3, emailF;
+	JPasswordField pwF, pw2F;
 	JRadioButton genderM, genderW;
 	JComboBox emailCombo;
 	JTextArea conT;
@@ -14,9 +17,7 @@ public class JoinPanel extends JPanel implements ActionListener{
 	//UtilDateModel model = new UtilDateModel();
 	//JDatePanelImpl datePanel = new JDatePanelImpl(model);
 	//JDatePickerImpl datePicker = new JDatePickerImpl(datePanel);
-    private CardLayout cardLayout;
-    private MenuPanel menup; // MenuPanel 객체 선언
-    private ControlPanel cp; // ControlPanel 객체 선언
+	
 	public JoinPanel() {
 		setLayout(null);
 		
@@ -27,8 +28,9 @@ public class JoinPanel extends JPanel implements ActionListener{
 		
 		id=new JLabel("아이디");
 		idF=new JTextField();
+		idF.setEnabled(false);
+		
 		idCheck=new JButton("아이디 중복체크");
-		idF.setEditable(false);
 		id.setBounds(230, 110, 80, 30);
 		idF.setBounds(320, 110, 180, 30);
 		idCheck.setBounds(520, 110, 120, 30);
@@ -36,15 +38,14 @@ public class JoinPanel extends JPanel implements ActionListener{
 		add(idF);
 		add(idCheck);
 		
-		
 		pw=new JLabel("비밀번호");
-		pwF=new JTextField();
+		pwF=new JPasswordField();
 		pw.setBounds(230, 150, 80, 30);
 		pwF.setBounds(320, 150, 180, 30);
 		add(pw);
 		add(pwF);
 		pw2=new JLabel("비밀번호 확인");
-		pw2F=new JTextField();
+		pw2F=new JPasswordField();
 		pw2.setBounds(230, 190, 80, 30);
 		pw2F.setBounds(320, 190, 180, 30);
 		add(pw2);
@@ -66,6 +67,9 @@ public class JoinPanel extends JPanel implements ActionListener{
 		add(gender);
 		add(genderM);
 		add(genderW);
+		ButtonGroup bg=new ButtonGroup();
+		bg.add(genderM); bg.add(genderW);
+		
 		
 		birth=new JLabel("생년월일");
 		birthF=new JTextField();
@@ -145,77 +149,7 @@ public class JoinPanel extends JPanel implements ActionListener{
 		btnP.add(cancel);
 		btnP.setBounds(10, 660, 940, 35);
 		add(btnP);
-		cancel.addActionListener(new ActionListener() {
-		    @Override
-		    public void actionPerformed(ActionEvent e) {
-		        // 이전 화면(로그인 화면)으로 돌아가기 위해 CardLayout 객체를 사용하여 로그인 화면을 보여줍니다.
-		        CardLayout cardLayout = (CardLayout) getParent().getLayout();
-		        cardLayout.show(getParent(), "LOGIN");
-		    }
-		});
+		
+	}
 
-    }
-    public JoinPanel(CardLayout cardLayout, MenuPanel menup, ControlPanel cp) { // 생성자 수정
-        this.cardLayout = cardLayout;
-        this.menup = menup; // MenuPanel 객체 초기화
-        this.cp = cp; // ControlPanel 객체 초기화
-        setLayout(null);
-
-        // 각종 컴포넌트들 생성 및 추가하는 코드
-
-        // 메뉴 클릭 이벤트 처리
-        // Home 메뉴 클릭 시
-        menup.homeBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                cardLayout.show(cp, "HOME");
-            }
-        });
-
-        // Find 메뉴 클릭 시
-        menup.findBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                cardLayout.show(cp, "FIND");
-            }
-        });
-
-        // Board 메뉴 클릭 시
-        menup.boardBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                cardLayout.show(cp, "BOARD");
-            }
-        });
-
-        // Chat 메뉴 클릭 시
-        menup.chatBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                cardLayout.show(cp, "CHAT");
-            }
-        });
-
-        // News 메뉴 클릭 시
-        menup.newsBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                cardLayout.show(cp, "NEWS");
-            }
-        });
-
-        // Exit 메뉴 클릭 시
-        menup.exitBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-            	JOptionPane.showMessageDialog(null, "프로그램을 종료합니다");
-                System.exit(0);
-            }
-        });
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        // actionPerformed 메서드 내용
-    }
 }

@@ -51,7 +51,7 @@ public class EmpDeptDAO {
 		   try
 		   {
 			   getConnection();
-			   String sql="SELECT  "
+			   String sql="SELECT empno, ename, job, hiredate,dname,loc "
 					     +"FROM emp,dept "
 					     +"WHERE emp.deptno=dept.deptno";
 			   ps=conn.prepareStatement(sql);

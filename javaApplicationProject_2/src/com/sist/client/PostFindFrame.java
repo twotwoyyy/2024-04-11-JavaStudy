@@ -4,17 +4,17 @@ import javax.swing.*;
 import javax.swing.table.*;
 
 public class PostFindFrame extends JFrame{
-	JTextField tf;
-	JButton b1,b2;
+	JTextField postTf;
+	JButton find,cancel;
 	JTable table;
 	DefaultTableModel model;
 	public PostFindFrame() {
 		setLayout(new BorderLayout());
-		tf=new JTextField(15);
-		b1=new JButton("검색");
-		b2=new JButton("취소");
+		postTf=new JTextField(15);
+		find=new JButton("검색");
+		cancel=new JButton("취소");
 		JPanel p=new JPanel();
-		p.add(tf);p.add(b1);p.add(b2);
+		p.add(postTf);p.add(find);p.add(cancel);
 		add("North",p);
 		
 		String[] col= {"우편번호","주소"};
