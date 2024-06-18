@@ -9,6 +9,6 @@ public class Function {
 	public static final int INFO=400; // info.jsp...
 	public static final int SEND=500;
 	public static final int EXIT=600;
-	public static final int MYEXID=610;
+	public static final int MYEXIT=610;
 	
 }

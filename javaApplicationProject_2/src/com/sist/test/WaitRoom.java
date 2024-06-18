@@ -8,6 +8,7 @@ public class WaitRoom extends JPanel{
 	JTextField tf;
 	JTable table1,table2;
 	DefaultTableModel model1,model2;
+	JScrollBar bar;
 	
 	public WaitRoom() {
 		String[] col1= {"방이름","상담사","상태","인원"};
@@ -37,9 +38,11 @@ public class WaitRoom extends JPanel{
 		
 		ta=new JTextArea();
 		JScrollPane js3=new JScrollPane(ta);
+		bar=js3.getVerticalScrollBar(); // 스크롤바 밑으로 내림 
 		ta.setEditable(false); // 건들지 못하게 (서버에서 보내는 값 출력 위치/ 채팅창)
 		
 		tf=new JTextField(); // 채팅 보내는 창
+		
 		b1=new JButton("방만들기");
 		b2=new JButton("방들어가기");
 		b3=new JButton("1:1 채팅");
@@ -56,6 +59,7 @@ public class WaitRoom extends JPanel{
 		add(js3);
 		tf.setBounds(385, 305, 390, 30); // 채팅보내기 창
 		add(tf);
+		
 		js2.setBounds(10, 340, 370, 200); // js2 접속대기명단
 		add(js2);
 		

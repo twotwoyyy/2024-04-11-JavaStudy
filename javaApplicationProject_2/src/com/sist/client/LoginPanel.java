@@ -1,7 +1,7 @@
 package com.sist.client;
 import javax.swing.*;
 import java.awt.*;
-public class LoginPanel extends JPanel{
+public class LoginPanel extends JFrame{
 	Image back;
 	JLabel titleLa, idLa, pwdLa;
 	JTextField idField;
@@ -51,10 +51,13 @@ public class LoginPanel extends JPanel{
 		p.setOpaque(false);
 		p.setBounds(10, 380, 940, 35);
 		add(p);
+		
+		setSize(960, 750);
+		setVisible(true);
 	}
-	@Override
-	protected void paintComponent(Graphics g) {
-		g.drawImage(back,0,0,getWidth(),getHeight(),this);
-	}
+//	@Override
+//	protected void paintComponent(Graphics g) {
+//		g.drawImage(back,0,0,getWidth(),getHeight(),this);
+//	}
 	
 }

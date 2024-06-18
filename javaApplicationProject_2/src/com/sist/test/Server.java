@@ -118,15 +118,67 @@ public class Server implements Runnable{
 				}
 				break;
 				// 나가기 요청
-				case Function.EXIT:{
-					
+				/*
+				 *   로그인
+				 *   -----
+				 *    로그인 하는 사람 => MYLOG
+				 *    로그인된 사람 => LOGIN
+				 *  나가기
+				 *  ----
+				 *   남아 있는 사람 => EXIT
+				 *   실제 나가는 사람 => MYEXIT
+				 *   
+				 *   Client / Server (웹)
+				 *      |        |
+				 *    Slave    Master
+				 *   
+				 *   Server => Client에 지시를 내린다
+				 *   Client => Server에서 지시를 받아서 동작 
+				 */
+				case Function.EXIT:{ // exit.jsp
+					// 남아 있는 사람 처리
+					messageAll(Function.EXIT+"|"+id); // 테이블에서 아이디 제거 
+					messageAll(Function.CHAT+"|[☞ 알림]"+name+"님이 퇴장하셨습니다ㅜㅜ");
+					// 실제 나가는 사람 처리 
+					for(Client client:waitVc) {
+						if(client.id.equals(id)) {
+							messageTo(Function.MYEXIT+"|"); // 윈도우창 종료 
+							waitVc.remove(client);
+							in.close();
+							out.close();
+						}
+					}
 				}
 				break;
 				// 채팅 요청 
 				case Function.CHAT:{
 					String message=st.nextToken();
-					messageTo(Function.CHAT+"|["
+					messageAll(Function.CHAT+"|["
 							+name+"]"+message); // 채팅창 
+				}
+				/*
+				 *   클라이언트 : 요청 ==<a>, <input type=button> , <form>
+				 *             응답값 출력 == html / css
+				 *       
+				 *   서버 : 요청받기 => 자바 라이브러리 (HttpServeletRequest)
+				 *                  보내기 (응답하기) (HttpServeletResponse
+				 *                  -----------------
+				 *                  저장하기
+				 *                  수정하기
+				 *                  삭제하기
+				 *                  찾기  
+				 *                  ---------- JDBC 오라클 연동 
+				 */
+				case Function.INFO:{
+					String yid=st.nextToken();
+					MemberVO vo=dao.meberInfo2(yid);
+					messageTo(Function.INFO+"|"
+					          +vo.getName()+"|"
+					          +vo.getSex()+"|"
+					          +vo.getAddr1()+"|"
+					          +vo.getEmail()+"|"
+					          +vo.getPhone()+"|"
+					          +vo.getContent());
 				}
 				break;
 				}
