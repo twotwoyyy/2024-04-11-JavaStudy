@@ -4,7 +4,7 @@ import javax.swing.*;
 import javax.swing.table.*;
 import javax.swing.text.*;
 import java.util.*;
-public class ChatPanel1 extends JFrame{
+public class ChatPanel1 extends JPanel{
 	JTextPane pane;
 	JTextField tf;
 	JComboBox<String> box1,box2;

@@ -13,9 +13,9 @@ public class GoodsDetailPanel extends JPanel implements ActionListener,ItemListe
 	JButton b1,b2;
 	JComboBox<Integer> box; //선택된 수량
 	JLabel pLa,tLa; // 금액/총금액
-	ControllPane ctrP; // 화면 이동
+	ControllPanel ctrP; // 화면 이동
 	GoodsDAO dao;
-	public GoodsDetailPanel(ControllPane ctrP) {
+	public GoodsDetailPanel(ControllPanel ctrP) {
 		dao=GoodsDAO.newInstance(); // DAO 사용 가능 
 		this.ctrP=ctrP;
 		setLayout(null);

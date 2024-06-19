@@ -27,7 +27,7 @@ public class ClientMain extends JFrame implements ActionListener, MouseListener,
 	PostFindFrame post=new PostFindFrame(); //우편번호 검색창
 	IdCheckFrame idFrm=new IdCheckFrame();
 	MenuPanel menuP=new MenuPanel();
-	ControllPane ctrP=new ControllPane();
+	ControllPanel ctrP=new ControllPanel();
 	
 	//네트워크에 필요한 객체
 	Socket s; //통신기기 => 핸드폰
@@ -158,7 +158,7 @@ public class ClientMain extends JFrame implements ActionListener, MouseListener,
 		}else if(e.getSource()==menuP.findBtn){
 			ctrP.card.show(ctrP,"FIND");
 		}else if(e.getSource()==menuP.boardBtn) {
-			ctrP.card.show(ctrP, "BOARD");
+			ctrP.card.show(ctrP, "BOARD"); // <a href="list.jsp">
 		}else if(e.getSource()==menuP.chatBtn) {
 			ctrP.card.show(ctrP, "CHAT");
 		}else if(e.getSource()==menuP.exitBtn) {

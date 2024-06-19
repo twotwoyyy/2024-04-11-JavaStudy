@@ -8,9 +8,10 @@ public class LoginPanel extends JFrame{
 	JPasswordField pwField;
 	JButton loginBtn, joinBtn, cancelBtn;
 	
-	public LoginPanel() {
-		back=Toolkit.getDefaultToolkit().getImage("c:\\project_image\\back.jpg");
-		
+	
+    public LoginPanel()
+    {
+    
 		titleLa=new JLabel("도서관리 프로그램",JLabel.CENTER);
 		titleLa.setFont(new Font("맑은 고딕",Font.BOLD,30));
 		titleLa.setForeground(Color.WHITE);
@@ -26,6 +27,7 @@ public class LoginPanel extends JFrame{
 		cancelBtn=new JButton("종료");
 		
 		//배치
+		
 		setLayout(null); //사용자정의
 		
 		titleLa.setBounds(10, 230, 940, 50);
@@ -54,7 +56,9 @@ public class LoginPanel extends JFrame{
 		
 		setSize(960, 750);
 		setVisible(true);
+		
 	}
+	
 //	@Override
 //	protected void paintComponent(Graphics g) {
 //		g.drawImage(back,0,0,getWidth(),getHeight(),this);

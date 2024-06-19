@@ -24,8 +24,8 @@ public class HomePanel  extends JPanel implements ActionListener,MouseListener{
 	// 데이터베이스 연결
 	GoodsDAO dao;
 	// 초기화
-	ControllPane ctrP;
-	public HomePanel(ControllPane ctrP) {
+	ControllPanel ctrP;
+	public HomePanel(ControllPanel ctrP) {
 		this.ctrP=ctrP;
 		dao=GoodsDAO.newInstance(); // 객체 생성
 		pan.setLayout(new GridLayout(3,4,5,5)); // 한 줄에 4개, 3줄 
