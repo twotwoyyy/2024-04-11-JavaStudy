@@ -138,7 +138,15 @@ public class ChatServer implements Runnable{
 					   break;
 					   case Function.INFO:
 					   {
-						   
+							String yid=st.nextToken();
+							MemberVO vo=dao.meberInfo2(yid);
+							messageTo(Function.INFO+"|"
+							          +vo.getName()+"|"
+							          +vo.getSex()+"|"
+							          +vo.getAddr1()+"|"
+							          +vo.getEmail()+"|"
+							          +vo.getPhone()+"|"
+							          +vo.getContent());
 					   }
 					   break;
 					   case Function.EXIT:
