@@ -23,6 +23,7 @@ public class HomePanel  extends JPanel implements ActionListener,MouseListener{
 	int totalpage=0; // 총페이지
 	// 데이터베이스 연결
 	GoodsDAO dao;
+	String myId;
 	// 초기화
 	ControllPanel ctrP;
 	public HomePanel(ControllPanel ctrP) {
@@ -92,7 +93,7 @@ public class HomePanel  extends JPanel implements ActionListener,MouseListener{
 				if(e.getClickCount()==2) {
 					String no=imgs[i].getToolTipText();
 					no=no.substring(no.lastIndexOf("^")+1);
-					ctrP.detailP.print(Integer.parseInt(no));
+					ctrP.detailP.print(Integer.parseInt(no),myId);
 					ctrP.card.show(ctrP, "DETAIL");
 				}
 			}

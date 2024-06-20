@@ -1,5 +1,6 @@
 package com.sist.dao;
 import java.util.*;
+import java.util.Date;
 import java.sql.*;
 /*   1. JDBC (자바에서 데이터베이스 연결하는 라이브러리) => java.sql
  *     1) 드라이버 등록
@@ -262,5 +263,87 @@ public class GoodsDAO {
 		return list;
 	}
 	// 구매 => INSERT, UPDATE, DELETE
+	// 여기서부터 추가 (장바구니)
+	/*
+	 * 	private int cno,gno,price,account;
+		private String id;
+		private Date regdate;
+	 */
+	public void cartInsert(CartVO vo) {
+		try {
+			getConnection();
+			String sql="INSERT INTO cart(cno,gno,id,price,account) "
+					  +"VALUES(cart_cno_seq.nextval,?,?,?,?)";
+			ps=conn.prepareStatement(sql);
+			ps.setInt(1, vo.getGno());
+			ps.setString(2, vo.getId());
+			ps.setInt(3, vo.getPrice());
+			ps.setInt(4, vo.getAccount());
+			ps.executeUpdate();
+			
+		}catch(Exception ex) {
+			ex.printStackTrace();
+		}finally {
+			disConnection();
+		}
+		
+	}
+	public void cartCancel(int cno) {
+		try {
+			getConnection();
+			String sql="DELETE FROM cart "
+					  +"WHERE cno="+cno;
+			ps=conn.prepareStatement(sql);
+			ps.executeUpdate();
+		}catch(Exception ex) {
+			
+		}finally {
+			disConnection();
+		}
+	}
+	/*
+	 * 설계 => 테이블 설계
+	 * ---------------
+	 * 시퀀스
+	 * 인덱스 : 자주 검색 / 데이터 출력이 많은 경우 => 속도 최적화  
+	 * ---------------------------------------------
+	 * 자주 사용하는 SQL : view
+	 * 테이블 여러 개 연결 : Join / SubQuery
+	 * ---------------------------------------------
+	 * 반복 수행 => 댓글 => 함수 => PL / SQL
+	 * SQL 소스량을 줄인다 => 자동화 처리 => Trigger 
+	 */
+	public List<CartVO> cartSelect(String id){
+		List<CartVO> list=new ArrayList<CartVO>();
+		try {
+			getConnection();
+			// 스칼라 서브쿼리 
+			String sql="SELECT /*+ INDEX_DESC(cart cart_cno_pk) */ cno,price,account,"
+					+ "(SELECT goods_poster FROM goods_all WHERE no=cart.gno),"
+					+ "(SELECT goods_name FROM goods_all WHERE no=cart.gno),"
+					+ "(SELECT goods_price FROM goods_all WHERE no=cart.gno) "
+					+ "FROM cart " 
+					+ "WHERE id=?";
+			ps=conn.prepareStatement(sql);
+			ps.setString(1, id);
+			ResultSet rs=ps.executeQuery();
+			while(rs.next()) {
+				CartVO vo=new CartVO();
+				vo.setCno(rs.getInt(1));
+				vo.setPrice(rs.getInt(2));
+				vo.setAccount(rs.getInt(3));
+				vo.getGvo().setGoods_poster(rs.getString(4));
+				vo.getGvo().setGoods_name(rs.getString(5));
+				vo.getGvo().setGoods_price(rs.getString(6));
+				list.add(vo);
+			}
+			rs.close();
+		}catch(Exception ex) {
+			ex.printStackTrace();
+		}finally {
+			disConnection();
+		}
+		return list;
+	}
 
 }

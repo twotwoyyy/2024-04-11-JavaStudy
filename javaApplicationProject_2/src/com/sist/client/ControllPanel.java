@@ -16,10 +16,12 @@ public class ControllPanel extends JPanel{
    BoardDetailPanel boardDtailP;
    BoardDeletePanel bDeleteP;
    BoardUpdatePanel bUpdateP;
-   
+   MypagePanel myP;
+   ClientMain cMain;
    ChatPanel1 chatP=new ChatPanel1();
-   public ControllPanel()
+   public ControllPanel(ClientMain cMain)
    {
+	   this.cMain=cMain;
 	   setLayout(card);
 	   //add("EP",ep);
 	   homeP=new HomePanel(this);
@@ -30,9 +32,10 @@ public class ControllPanel extends JPanel{
 	   boardDtailP=new BoardDetailPanel(this);
 	   bDeleteP=new BoardDeletePanel(this);
 	   bUpdateP=new BoardUpdatePanel(this);
+	   myP=new MypagePanel(this);
 	   
 	   
-	   add("HP",homeP);
+	   add("HOME",homeP);
 	   add("CHAT",chatP);
 	   add("DETAIL",detailP);
 	   add("FIND",findP);
@@ -41,6 +44,7 @@ public class ControllPanel extends JPanel{
 	   add("BDETAIL",boardDtailP);
 	   add("DELETE",bDeleteP);
 	   add("UPDATE",bUpdateP);
+	   add("MYPAGE",myP);
 	   
 	   
 	  

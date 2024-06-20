@@ -15,6 +15,7 @@ public class FindPanel extends JPanel implements ActionListener,MouseListener{
     GoodsDAO dao;
     ControllPanel ctrP;
     TableColumn column;
+    String myId;
     public FindPanel(ControllPanel ctrP)
     {
     	dao=GoodsDAO.newInstance();
@@ -68,7 +69,7 @@ public class FindPanel extends JPanel implements ActionListener,MouseListener{
     		else if(i==2)
     			column.setPreferredWidth(500);
     		else if(i==3)
-    			column.setPreferredWidth(150);
+    			column.setPreferredWidth(30);
     	}
     	
     	
@@ -135,7 +136,7 @@ public class FindPanel extends JPanel implements ActionListener,MouseListener{
 			{
 				int row=table.getSelectedRow();
 				String no=model.getValueAt(row, 0).toString();
-				ctrP.detailP.print(Integer.parseInt(no));
+				ctrP.detailP.print((Integer.parseInt(no)),myId);
 				ctrP.card.show(ctrP, "DETAIL");
 			}
 		}
