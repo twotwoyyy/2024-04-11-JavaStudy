@@ -19,7 +19,8 @@ HIT           NUMBER
  */
 @Data
 public class BooksVO {
-	private int num, isbn, page, price, number, hit;
-	private String bookname, writer, trainslator, series, paper, image, detail;
+	private int num, page, price, number, hit;
+	private long isbn;
+	private String bookname, writer, translator, series, paper, image, detail;
 	private Date pubdate;
 }

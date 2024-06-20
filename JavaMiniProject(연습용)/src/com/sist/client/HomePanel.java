@@ -24,6 +24,7 @@ public class HomePanel extends JPanel implements ActionListener,MouseListener{
 	    int totalpage=0; // 총페이지 
 
 	    BooksDAO dao;
+	    String myId;
 	    ControllPanel ctrP;
 	    public HomePanel(ControllPanel ctrP) {
 	    	this.ctrP=ctrP;
@@ -73,19 +74,19 @@ public class HomePanel extends JPanel implements ActionListener,MouseListener{
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
-//		for(int i=0;i<imgs.length;i++)
-//		{
-//			if(e.getSource()==imgs[i])
-//			{
-//				if(e.getClickCount()==2)
-//				{
-//					String num=imgs[i].getToolTipText();
-//					num=num.substring(num.lastIndexOf("^")+1);
-//					ctrP.detailP.print(Integer.parseInt(num));
-//					ctrP.card.show(ctrP, "DETAIL");
-//				}
-//			}
-//		}
+		for(int i=0;i<imgs.length;i++)
+		{
+			if(e.getSource()==imgs[i])
+			{
+				if(e.getClickCount()==2)
+				{
+					String num=imgs[i].getToolTipText();
+					num=num.substring(num.lastIndexOf("^")+1);
+					ctrP.detailP.print(Integer.parseInt(num));
+					ctrP.card.show(ctrP, "DETAIL");
+				}
+			}
+		}
 	}
 
 	@Override

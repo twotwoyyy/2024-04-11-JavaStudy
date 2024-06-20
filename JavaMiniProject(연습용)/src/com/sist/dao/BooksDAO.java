@@ -58,11 +58,11 @@ public class BooksDAO {
   
      try {
     	 getConnection();
-    	 String sql="SELECT num,bookname,image,no "
-    			 +"FROM (SELECT num,bookname, image, rownum as no "
-    			 +"FROM (SELECT num,bookname, image "
-    			 +"FROM wiki ORDER BY num ASC)) "
-    			 +"WHERE no BETWEEN ? AND ?";
+			String sql = "SELECT NUM, ISBN, BOOKNAME, WRITER, TRANSLATOR, PAGE, PRICE, PUBDATE, SERIES, IMAGE, DETAIL, rnum "
+					+ "FROM(SELECT NUM, ISBN, BOOKNAME, WRITER, TRANSLATOR, PAGE, PRICE, PUBDATE, SERIES, IMAGE, DETAIL, rownum as rnum "
+					 + "FROM(SELECT NUM, ISBN, BOOKNAME, WRITER, TRANSLATOR, PAGE, PRICE, PUBDATE, SERIES, IMAGE, DETAIL "
+					 + "FROM wiki ORDER BY NUM ASC)) "
+					 + "WHERE rnum BETWEEN ? AND ?";
     	 int rowSize=12;
     	 int start=(rowSize*page)-(rowSize-1);
     	 int end=rowSize*page;
@@ -73,10 +73,19 @@ public class BooksDAO {
     	 ResultSet rs=ps.executeQuery();
     	 while(rs.next()) {
     		 BooksVO vo=new BooksVO();
-    		 vo.setNum(rs.getInt(1));
-    		 vo.setBookname(rs.getString(2));
-    		 vo.setImage(rs.getString(3));
-    		 list.add(vo);
+				vo.setNum(rs.getInt(1));
+				vo.setIsbn(rs.getLong(2));
+				vo.setBookname(rs.getString(3));
+				vo.setWriter(rs.getString(4));
+				vo.setTranslator(rs.getString(5));
+				vo.setPage(rs.getInt(6));
+				vo.setPrice(rs.getInt(7));
+				vo.setPubdate(rs.getDate(8));
+				vo.setSeries(rs.getString(9));
+				vo.setImage(rs.getString(10));
+				vo.setDetail(rs.getString(11));
+								
+				list.add(vo);
     	 }
     	 rs.close();
      }catch(Exception ex) {
@@ -108,10 +117,10 @@ public class BooksDAO {
     		 ResultSet rs=ps.executeQuery();
     		 rs.next();
     		 vo.setNum(rs.getInt(1));
-    		 vo.setIsbn(rs.getInt(2));
+    		 vo.setIsbn(rs.getLong(2));
     		 vo.setBookname(rs.getString(3));
     		 vo.setWriter(rs.getString(4));
-    		 vo.setTrainslator(rs.getString(5));
+    		 vo.setTranslator(rs.getString(5));
     		 vo.setPage(rs.getInt(6));
     		 vo.setPrice(rs.getInt(7));
     		 vo.setPubdate(rs.getDate(8));
@@ -158,5 +167,68 @@ public class BooksDAO {
     	 }
     	 return list;
      }
+     public void cartInsert(BookCartVO vo) {
+    	 try {
+    		 getConnection();
+    		 String sql="INSERT INTO bookcart(bno,id,bnum,account,price) "
+    				   +"VALUES(bookcart_bno_seq.nextval,?,?,?,?)";
+    		 ps=conn.prepareStatement(sql);
+    		 ps.setString(1, vo.getId());
+    		 ps.setInt(2, vo.getBnum());
+    		 ps.setInt(3, vo.getAcoount());
+    		 ps.setInt(4, vo.getPrice());
+    		 ps.executeUpdate();
+    	 }catch(Exception ex) {
+    		 ex.printStackTrace();
+    	 }finally {
+    		 disConnection();
+    	 }
+     }
      
+     public void cartCancel(int bno) {
+    	 try {
+    		 getConnection();
+    		 String sql="DELETE FROM bookcart "
+    				   +"WHERE bno="+bno;
+    		 ps=conn.prepareStatement(sql);
+    		 ps.executeUpdate();
+    	 }catch(Exception ex) {
+    		 ex.printStackTrace();
+    	 }finally {
+    		 disConnection();
+    	 }
+     }
+
+     public List<BookCartVO> cartSelect(String id){
+    	 List<BookCartVO> list=new ArrayList<BookCartVO>();
+    	 try {
+    		 getConnection();
+    		 String sql="SELECT bno,price,account,"
+    				 +"(SELECT image FROM wiki WHERE num=bookcart.bno),"
+    				 +"(SELECT bookname FROM wiki WHERE num=bookcart.bno),"
+    				 +"(SELECT price FROM wiki WHERE num=bookcart.bno) "
+    				 +"FROM bookcart WHERE id=?";
+    		 ps=conn.prepareStatement(sql);
+    		 ps.setString(1, id);
+    		 ResultSet rs=ps.executeQuery();
+    		 while(rs.next()) {
+    			 BookCartVO vo=new BookCartVO();
+    			 vo.setBno(rs.getInt(1));
+    			 vo.setPrice(rs.getInt(2));
+    			 vo.setAcoount(rs.getInt(3));
+    			 vo.getBvo().setImage(rs.getString(4));
+    			 vo.getBvo().setBookname(rs.getString(5));
+    			 vo.getBvo().setPrice(rs.getInt(6));
+    			 list.add(vo);
+    		 }
+    		 rs.close();
+    				
+
+    	 }catch(Exception ex) {
+    		 ex.printStackTrace();
+    	 }finally {
+    		 disConnection();
+    	 }
+    	 return list;
+     }
 }
